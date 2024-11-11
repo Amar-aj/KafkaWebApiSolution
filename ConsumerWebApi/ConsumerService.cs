@@ -45,9 +45,7 @@ public class ConsumerService : BackgroundService
         {
             var consumeResult = _consumer.Consume(stoppingToken);
 
-            var message = consumeResult.Message.Value;
-
-            _logger.LogInformation($"Received chat update: {message}");
+            _logger.LogInformation($"Received chat update: topic - {consumeResult.Topic}  message - {consumeResult.Message.Value}");
         }
         catch (Exception ex)
         {
