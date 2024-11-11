@@ -10,7 +10,6 @@ public class ProducerController : ControllerBase
 {
     private readonly IConfiguration _configuration;
     private readonly IProducer<Null, string> _producer;
-    readonly string _topic = "ProduceChat";
     readonly string _clientId = "my-app";
 
     public ProducerController(IConfiguration configuration)
@@ -30,7 +29,7 @@ public class ProducerController : ControllerBase
     public async Task<IActionResult> PostAsync(string message)
     {
         var kafkamessage = new Message<Null, string> { Value = message, };
-        await _producer.ProduceAsync(_topic, kafkamessage);
+        await _producer.ProduceAsync(_configuration["Kafka:Topic"], kafkamessage);
         return Ok("Updated Successfully...");
     }
 }

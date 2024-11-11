@@ -10,7 +10,6 @@ public class ConsumerService : BackgroundService
 
     private readonly ILogger<ConsumerService> _logger;
 
-    readonly string _topic = "ProduceChat";
 
     public ConsumerService(IConfiguration configuration, ILogger<ConsumerService> logger)
     {
@@ -27,7 +26,7 @@ public class ConsumerService : BackgroundService
     }
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _consumer.Subscribe(_topic);
+        _consumer.Subscribe(_configuration["Kafka:Topic"]);
 
         while (!stoppingToken.IsCancellationRequested)
         {
